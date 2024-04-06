@@ -1,0 +1,107 @@
+.navbarnogap{
+    position: relative; 
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.BrownBG {
+    background-color: rgb(50, 28, 14);   
+    color:white;}
+.MaroonBG{
+    background-color: rgb(66, 44, 33);
+    color:white}
+.WoodBG{
+    background-color: rgb(36, 11, 2);
+    color:white}
+
+
+.nav-item:hover{
+    background-color: rgb(5, 3, 3);
+}
+
+#stickybar{
+b{size:small}}
+
+
+.BGPic{
+    background-image: url('Pics/fontpic.jpeg');
+    background-repeat: no-repeat;
+    background-position: fixed;
+    background-size: cover; 
+}
+
+#Gallery {
+    padding-top:12px; 
+    scroll-margin-top: 105px; 
+    text-align: right;
+    padding-right: 20px;
+
+}
+
+img.RightFloat{
+float:right;
+width:360px;
+padding-right:100px;
+}
+
+
+div.sticky {
+    position: -webkit-sticky; /* for Safari browsers like mine*/
+    position: sticky;
+    top: 0; /* Also for Safari */
+  }
+
+
+/* Below for Center Submissions (Summative) */  
+.HiddenSelect {
+    display: none;
+    }
+
+.subsgrid {
+    display: grid;
+    grid-template-columns: 210px 260px 80px 100px;
+    column-gap: 12px;
+    row-gap: 10px;
+    }
+
+.subsgridyep {
+    display: grid;
+    grid-template-columns: 210px 140px 120px 80px 100px;
+    column-gap: 8px;
+    row-gap: 10px; 
+}
+
+#AddButton {
+    background-color: rgb(22, 51, 22);
+    color: white;
+    border: none;
+}
+
+#DeleteButton {
+    background-color: rgb(77, 19, 19);
+    color: white;
+}
+
+.CIstyles {
+    background-color: rgb(30, 26, 26);
+    color: white;
+}
+
+.CenterSubs {
+    margin-top: 10px;
+}
+
+/*Below for Interactive Map*/
+#LCCMap{
+    height: 550px;
+    width: 900px;
+    margin: auto;   
+}
+
+
+
+
+
+
