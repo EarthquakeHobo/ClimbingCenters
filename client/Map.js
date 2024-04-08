@@ -39,6 +39,8 @@ Yonder,
 Harrowall,
 ];
 
+
+
 /**
  * @function
  * @param {object} - CenterDisplay[i] - adds Pin properties to the Climbing center objects within the CenterDisplay dataset
@@ -177,3 +179,4 @@ function displayAbout(){
 }
 
 
+// https://registry.gsg.org.uk/sr/registrysearch.php 
