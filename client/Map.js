@@ -1,11 +1,14 @@
-/** Greetings! 
- */
+fetch('http://127.0.0.1:8090/CentersAll.json')
+  .then(response => response.json())
+  .then(data => {
+    const CenterDisplay = data;
+    console.log("loaded"); 
+  })
+  .catch(error => { 
+    console.error('Error fetching JSON file:', error);
+  });
 
-/** Object constructor retroactively added to allow easier expanding of CenterDisplay 
- * @constructor - Center
- * @param {string} name - name of Climbing center or buildering spot
- * @param {string} Dday - Day on which center has super off peak/student discount
- * @param {object} Pin - Array containing Long and Lat, referenced in functions newpin() and renderpins() */
+/*
 function Center(name, DDay, Pin) {
     this.name = name;
     this.DDay = DDay; 
@@ -16,10 +19,6 @@ function Center(name, DDay, Pin) {
 let Yonder = new Center("Yonder", "Tuesday & Friday", ['51.59004849809571', '-0.040686369315706']);
 let Harrowall = new Center("Harrowall", "Friday", ['51.58108375390574', '-0.343247901104178']);
 
-
-/** Array of Objects (climbing centers), as the dataset referenced in other functions and used for further manipulation. 
- * @typedef {Object[]} CenterDisplay
- */
 const CenterDisplay = [{
     name: 'VauxEast',
     DDay: 'Monday',
@@ -39,12 +38,8 @@ Yonder,
 Harrowall,
 ];
 
+*/
 
-
-/**
- * @function
- * @param {object} - CenterDisplay[i] - adds Pin properties to the Climbing center objects within the CenterDisplay dataset
- */
 function newpin(a){
     const PinInput = prompt("On Google Maps, (right)click its pin to copy Longitude,Latitude ", "51.543, -0.1242");
     if (PinInput !== null) {
@@ -180,3 +175,4 @@ function displayAbout(){
 
 
 // https://registry.gsg.org.uk/sr/registrysearch.php 
+

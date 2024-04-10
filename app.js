@@ -2,11 +2,22 @@ const express = require('express');
 const fs = require('fs');
 const app = express();
 app.use(express.static('client'));
+app.use(express.json());
 
-let CentersAll = require('./CentersAll.json');
+const CentersJSON = ('./CentersAll.json')
+const CentersAll = require(CentersJSON);
 
 app.get('/CentersAll', function(req, resp){
-    resp.send(CentersAll);});
+    resp.send(CentersAll);
+    const CenterProperties = Object.keys('CentersJSON')    
+});
+
+
+
+
+function updateCenters(){
+    fs.writeFileSync('./CentersAll.json', JSON.stringify(CentersAll))
+}
 
 app.get('/NameSearch/:name', function (req, resp){
     let CenterName = req.params.name;
@@ -35,16 +46,17 @@ app.get('/CenterDiscountSearch', function (req, resp) {
     resp.send(searchResults);
   });
 
+
+app.post('/addcenter', function (req, resp) {
+    const name = req.body.name;
+    const DDay = req.body.DDay;
+    const newCenter = {name,DDay};
+    CentersAll.push(newCenter);
+    resp.send('Added new center');
+    updateCenters;
+  });
+
  
-/** 
-http = require("http");
-http.createServer(function (request, response){
-    response.writeHead(200, {'Content-Type': 'text/plain'});
-    response.end('Whats up fuckersss!\n');
-}).listen(8080);
-console.log('Server running at http://127.0.0.1:8080/');
-app.listen(8090);
-*/ 
 
 module.exports = app
 

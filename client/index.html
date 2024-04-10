@@ -49,58 +49,7 @@
 
 <div class="container WoodBG">
     <h4 id="DestGuide" style="scroll-margin-top: 105px;"> <u>Expectations for your first visit</u> </h4>
-        <p> Though the Font grading system <i><small>(f6, f7A+ etc.)</small></i> used by many indoor bouldering gyms was indeed named after the Forest, a majority of the problems you'll encounter will feel very difficult for their grade. A strong emphasis on the right beta will be important for sending climbs, and it's generally recommended to give most problems no more than 3 tries before moving on. </p> 
-
-    <h4> <u>Accomodation</u> </h4>
-        <p> 3 main options exist, depending on the type of traveller</p>
-        <dl>
-            <!--not sure why style tag is required for the jpeg but not the jpg-->
-            <img src="Pics/Gite.jpeg" class="img-fluid Rightfloat" alt="Gite pic" style="float:right;width:360px;padding-right:100px">
-            <dt>Cottages</dt>
-                <ul>
-                    <li>Best value accomodation for Families and groups of 4-8 people </li>
-                    <li>Private amenities including kitchen, showers, and toilets</li>
-                    <li>Most can be booked on Airbnb</li>        
-                    <li>Almost always a <b>car will be required</b></li>
-                </ul>
-            <dd> <p style="margin:0">Called gîtes, these are comfortable cabins of varying sizes that are privately rented out for days to weeks.</p> <p>Locations can however be relatively remote, and the nearest supermarket may be several miles away.</p></dd>
-
-            <img src="Pics/Hostel.jpg" class="img-fluid RightFloat" alt="Hostel dining area">
-            <dt>Hostels</dt>
-            <ul>
-                <li>Best for solo travellers looking to meet new climber friends</li>
-                <li>Shared amenities including kitchen, showers, and toilets</li>
-                <li>Most within walking distance to at least 2 crags, as well as supermarkets</li>   
-                <li>Accessible using public transport/by foot</li>     
-            </ul>
-                <dd><p style="margin:0">Font attracts climbers from all around the world, and many stay at hostels for weeks at a time.</p>
-                    <p> Though slightly more expensive than Gites (roughly 25 EUR/night), staying at one is a great way to make new friends.</p></dd>
-
-            <dt>Camping</dt>
-            <ul>
-                <li>Best price experienced for travellers</li>
-                <li>Communal amenities including showers and toilets, but no kitchens</li>
-                <li>La Musadiere, one of the better known campsites, is accessible on foot and within walking distance to Trois Pignons</li>      
-            </ul>
-        </dl> 
-        <form style="padding-top: 12px;" method="get">
-            <fieldset>
-                <legend><u>Gear Checklist </u></legend>
-                <p> Aside from your Climbing shoes and chalk, plus typical travel gear like clothes, toiletries, devices and their chargers <small>(pack light!)</small>, here's a roundup of gear highly useful gear to include in your daypack - especially in summer months.</p>
-                <input type="checkbox" id="Tripod" name ="Tripod" value="Tripod">
-                <label for="Tripod">Phone Tripod for compact photography and video-ing your sends</label>
-                <br>
-                <input type="checkbox" id="Towel" name ="Towel" value="Dust Towel">
-                <label for="Towel"> Travel Hammock for crag naps </label>
-                <br>
-                <input type="checkbox" id="Sunscreen" name ="Sunscreen" value="Sunscreen">
-                <label for="Sunscreen"> Sunscreen - or you'll look like a leather handbag when you're old.</label>
-                <br>
-                <input type="checkbox" id="Repellent" name ="Repellent" value="Mosquito Repellent">
-                <label for="Repellent"> Mosquito Repellent - or you'll look like the inside of a pomegranate.</label>
-                <br>
-            </fieldset>
-        </form>
+       
 </div>
 
 <div class="container col BrownBG" id="Gear" style="scroll-margin-top: 105px;">
@@ -132,7 +81,7 @@
                 <option value = "Thursday"> Thursday </option>
                 <option value = "Friday"> Friday </option>
             </select> 
-            <button onclick="AddCenter()" id="AddButton">Add</button>
+            <button id="AddButton">Add</button>
         </div>
         <div class = "CenterSubs subsgrid"> <!--html from Map.js goes in this div--> </div>
 
@@ -193,8 +142,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
      crossorigin=""></script>
-<script src="Map.js"> </script>
-<script src="app.js"> </script>
+<script src="index.js"> </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
