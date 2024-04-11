@@ -1,19 +1,3 @@
-async function renderpins(){
-    const rawdata = await fetch ('http://127.0.0.1:8090/CentersAll');
-    const rawtext = await rawdata.text();
-    const CenterDisplayy = JSON.parse(rawtext);
-    for (let i=0; i<CenterDisplayy.length; i++){
-        const center = CenterDisplayy[i];
-        const {name , DDay} = center;
-        const Longitude = center.Pin[0];
-        const Latitude = center.Pin[1];
-        const PopUp = `<p> ${name}</p> <sup>Discount on ${DDay}</sup>`
-        console.log(Longitude)
-        const pin = L.marker([Longitude, Latitude]).addTo(map);
-        pin.bindPopup (PopUp)}
-}
-renderpins();
-
 async function newpin(i){
     const PinInput = prompt("On Google Maps, (right)click its pin to copy Longitude,Latitude ", "51.543, -0.1242");
         const Coordinates = PinInput.split(',');
@@ -33,10 +17,6 @@ async function newpin(i){
     console.log("CentersAll");
     }   
 
-
-
-
-
 async function renderCenters(){
     const rawdata = await fetch ('http://127.0.0.1:8090/CentersAll');
     const rawtext = await rawdata.text();
@@ -49,11 +29,11 @@ async function renderCenters(){
             <div>${name} </div> 
             <div>${DDay}</div>  
             <button 
-                onclick = "CenterDelete(${i}); renderCenters();" 
+                onclick = "CenterDelete(${i}); renderCenters(); renderpins();" 
                 class="DeleteButton" style = "border: none; padding-top: 5px; padding-bottom: 5px;"> Delete 
             </button>
             <button 
-            onclick = "newpin(${i})"
+            onclick = "newpin(${i}); renderCenters(); renderpins();"
             style = "background-color: rgb(30, 26, 26); color: white;"> 
             Pin on Map </button>
             `
@@ -63,51 +43,67 @@ async function renderCenters(){
     }
 
 async function CenterDelete(a) {
-    try {
-        const response = await fetch(`/deleteCenter/${a}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-    } catch (error) {
-        console.error('Error deleting center:', error);
-    }
-    renderpins();
-}
-
-/* 
-const DeleteButton = document.getElementById("DeleteButton"); 
-DeleteButton.addEventListener ('click', async function (){
-try {
-    const response = await fetch(`/deleteCenter/${i}`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
+    const password = prompt("Enter Password to Delete Center. The password is password");
+    if (password === "password"){
+        try {
+            const response = await fetch(`/deleteCenter/${a}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        } catch (error) {
+            console.error('Error deleting center:', error);
         }
-    });
-    renderCenters();
-} 
-catch (error) {
-    console.error('Error deleting center:', error);
+        renderCenters();
+        renderpins();           }
+    else {alert("Incorrect Password")}
 }
-});
-*/
+
+async function renderpins(){
+    const rawdata = await fetch ('http://127.0.0.1:8090/CentersAll');
+    const rawtext = await rawdata.text();
+    const CenterDisplayy = JSON.parse(rawtext);
+    for (let i=0; i<CenterDisplayy.length; i++){
+        const center = CenterDisplayy[i];
+        const {name , DDay} = center;
+        const Longitude = center.Pin[0];
+        const Latitude = center.Pin[1];
+        const PopUp = `<p> ${name}</p> <sup>Discount on ${DDay}</sup>`
+        console.log(Longitude)
+        const pin = L.marker([Longitude, Latitude]).addTo(map);
+        pin.bindPopup (PopUp)}
+}
+renderpins();
+
+const DDSearchForm = document.getElementById("DDSearch");
+
+DDSearchForm.addEventListener('submit', async function(event){
+    event.preventDefault();
+    const formdata = new FormData(DDSearchForm);
+    const searchParams = new URLSearchParams(formdata);
+    try{    
+        const results = await fetch ('http://127.0.0.1:8090/CenterDiscountSearch?' + searchParams.toString());
+        const resultsjson = await results.json();
+        document.getElementById("DDSearchResults").innerHTML = DDfilter(resultsjson)
+    } catch (error) {alert (error)}
+}
+)
+
+function DDfilter (centers){
+    let table = "<table style = 'width = 100%; border-collapse: collapse;' >"
+    table += "<tr><th>Center</th><th>Coordinates</th><th>Discounted On</th></tr>"
+    for(let center of centers){
+        const Pinshort = center.Pin.map(n => parseFloat(n).toFixed(2));
+        console.log (Pinshort);
+        table += `<tr style = 'border: 1px solid black;'> <td>${center.name}</td> <td style='padding-left: 12px; padding-right: 12px'>${Pinshort}</td> <td>${center.DDay}</td><td></tr>`
+    }
+    table += "</table>";
+    return table;
+  }
 
 
 
-
-
-    
-/* Personal Notes:             
-renderCenters() at start to start off with objects saved here, works because of Hoisting
-Shortened following 
-    const name = center.name;
-    const DDay = center.DDay; 
-    and     const CDHTML = '<p>' + center + DDay '</p>', 
-${} allows embedded expression from outside ''
-innerHTML seperated into 4 elements (2 divs 1 button) for CSS grid structuring
-*/
 
 const addbutton = document.getElementById('AddButton'); 
 addbutton.addEventListener('click', async function(event) {
@@ -190,15 +186,20 @@ function displayAbout(){
 
 document.addEventListener('DOMContentLoaded', renderCenters, renderpins);
 
-/*
-function Center(name, DDay, Pin) {
-    this.name = name;
-    this.DDay = DDay; 
-    this.Pin = Pin;
-    console.log (typeof(Pin));
-};
-
-let Yonder = new Center("Yonder", "Tuesday & Friday", ['51.59004849809571', '-0.040686369315706']);
-let Harrowall = new Center("Harrowall", "Friday", ['51.58108375390574', '-0.343247901104178']);
-
+/* 
+const DeleteButton = document.getElementById("DeleteButton"); 
+DeleteButton.addEventListener ('click', async function (){
+try {
+    const response = await fetch(`/deleteCenter/${i}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    renderCenters();
+} 
+catch (error) {
+    console.error('Error deleting center:', error);
+}
+});
 */

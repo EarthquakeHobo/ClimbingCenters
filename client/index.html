@@ -27,8 +27,8 @@
         <div class="row navbar-nav">
             <div class="col WoodBG nav-item">
                 <a href="#DestGuide" class="nav-link active">
-                    <h4> Fontainebleau Guide </h4>
-                    <p style="font-size: 0.8em;">Thousands of natural sandstone boulders, remnants of the Oligoscene age, scattered within a 250 km<sup>2</sup> forest.</p>
+                    <h4> Click for additional info </h4>
+                    <button id="AboutMap" class="CIstyles"> About this map </button>
                 </a>
             </div>
             <div class="col BrownBG nav-item">
@@ -48,19 +48,19 @@
 </nav>
 
 <div class="container WoodBG">
-    <h4 id="DestGuide" style="scroll-margin-top: 105px;"> <u>Expectations for your first visit</u> </h4>
-       
+    <div id="AboutText" style = "display:none">
+        <p>Climbing in London is spenny. Indoor boulder gyms cost up to £15 per entry, compared to the £8 entry of the fabulous Durham Climbing Center. To climbers visiting London and wanting to visit some of the gyms, it may be best to plan their travels based on the "super off peak" days that many gyms have, giving the option of a 50% day pass.</p>
+        <p>This website compiles and maps these gyms based on their super off peak days. The dataset is small because I made it myself by visiting their websites/in person.</p>
+        <p style = "margin: 0px;"> 1. Add and Delete to edit the database (methods Post and Delete). Refresh after Deleting to update Pins.</p> 
+            <p> 2. Pin on Map to create new pin (method Patch to edit center.Pin).</p>  
+            <p> 3. Find Centers based on discounts (using fetch query) </p>
+        </div>
 </div>
 
 <div class="container col BrownBG" id="Gear" style="scroll-margin-top: 105px;">
 <!--Interactive Map-->
     <div style = "text-align: center;"> 
     <h4><u>London Climbing Map</u></h4>
-    <button id="AboutMap" class="CIstyles"> About this map </button>
-        <div id="AboutText" style = "display:none">
-        <p style = "margin: 0px;"> Designed for those visiting London to see & filter centers by 50% student discounts or "super off peak" day availability, especially if their stay is too short to justify a membership. It can also be used to mark and submit new centers or <b>buildering spots</b> by adding them to the CenterDisplay dataset. </p> 
-        <p>Future development ideas include a visual calendar for climbers to mark a set of dates and locations, which alumni may use to plan meet-ups if they wish. </p>  
-        </div>
     </div>
 
     <div id="LCCMap"></div>
@@ -90,7 +90,7 @@
         <div>
             <h5 style="padding-top: 10px; display: inline-block;" > 
                 Find Centers discounted on </h5>
-            <form method = "GET" action="CenterDiscountSearch" style="display: inline-block; padding-left: 5px;"> 
+            <form id = DDSearch style="display: inline-block; padding-left: 5px;"> 
                 <select name="DDay" class="CIstyles">
                     <option value = "Monday"> Monday </option>
                     <option value = "Tuesday"> Tuesday </option>
@@ -100,10 +100,11 @@
                 </select>
                 <button type="submit">Search</button>
             </form>
+            <div id = "DDSearchResults"></div>
         </div>
     </div>
 
-    <div class="col-lg-6 col-md-6 mb-6" style="padding-top: 30px;">
+    <div class="col-lg-6 col-md-12 mb-6" style="padding-top: 30px; flex-wrap: wrap;">
         <button onclick= "toggleCentersAll()"> Show All Centers</button>
         <div id = "CenterSubs" class = "HiddenSelect"> <!--html from Map.js goes in this div--> </div>
     </div>

@@ -34,6 +34,7 @@ app.get('/NameSearch/:name', function (req, resp){
 
 app.get('/CenterDiscountSearch', function (req, resp) {
     const dday = req.query.DDay;
+    console.log(dday);
     const searchResults = [];
     for (const c of CentersAll) {
         if (c.DDay === dday) {
@@ -59,6 +60,7 @@ app.post('/addcenter', function (req, resp) {
     const tobedeleted = CentersAll[i]
     CentersAll.splice(i, 1);
     console.log ("Deleted ", tobedeleted)
+    updateCenters;
 });
 
  
@@ -66,8 +68,9 @@ app.patch('/newpin/:index', (req,res) => {
     const i = req.params.index;
     const Pin = req.body.Pin;
     CentersAll[i].Pin = Pin;
-    console.log ("Pin assigned");
+    console.log ("Pin assigned to", CentersAll[i]);
     console.log (CentersAll);
+    updateCenters;
 });
 
 module.exports = app
