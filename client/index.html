@@ -66,6 +66,8 @@
     <div id="LCCMap"></div>
 
 <!--Center Submissions-->
+<div class="row gx-1">
+    <div class="col-lg-6 col-md-6 mb-6">
     <h5 style="margin-top: 12px;">New Center Submissions </h5> 
         <div id = "changinggrid" class="subsgrid">
             <input placeholder = "Center Name" class="CenterInput CIstyles" style="padding: 6px;"> 
@@ -83,25 +85,30 @@
             </select> 
             <button id="AddButton">Add</button>
         </div>
-        <div class = "CenterSubs subsgrid"> <!--html from Map.js goes in this div--> </div>
 
-<!--CenterSearch-->
-    <div>
-    <h4 style="padding-top: 10px; display: inline-block;" > 
-        Find Centers discounted on </h4>
-    <form method = "GET" action="CenterDiscountSearch" style="display: inline-block; padding-left: 5px;"> 
-        <select name="DDay" class="CIstyles">
-            <option value = "Monday"> Monday </option>
-            <option value = "Tuesday"> Tuesday </option>
-            <option value = "Wednesday"> Wednesday </option>
-            <option value = "Thursday"> Thursday </option>
-            <option value = "Friday"> Friday </option>
-        </select>
-        <button type="submit">Search</button>
-    </form>
-    </p>
+        <!--CenterSearch-->
+        <div>
+            <h5 style="padding-top: 10px; display: inline-block;" > 
+                Find Centers discounted on </h5>
+            <form method = "GET" action="CenterDiscountSearch" style="display: inline-block; padding-left: 5px;"> 
+                <select name="DDay" class="CIstyles">
+                    <option value = "Monday"> Monday </option>
+                    <option value = "Tuesday"> Tuesday </option>
+                    <option value = "Wednesday"> Wednesday </option>
+                    <option value = "Thursday"> Thursday </option>
+                    <option value = "Friday"> Friday </option>
+                </select>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 mb-6" style="padding-top: 30px;">
+        <button onclick= "toggleCentersAll()"> Show All Centers</button>
+        <div id = "CenterSubs" class = "HiddenSelect"> <!--html from Map.js goes in this div--> </div>
     </div>
 </div>
+
 
 
 

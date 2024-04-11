@@ -12,9 +12,6 @@ app.get('/CentersAll', function(req, resp){
     const CenterProperties = Object.keys('CentersJSON')    
 });
 
-
-
-
 function updateCenters(){
     fs.writeFileSync('./CentersAll.json', JSON.stringify(CentersAll))
 }
@@ -56,7 +53,22 @@ app.post('/addcenter', function (req, resp) {
     updateCenters;
   });
 
+
+  app.delete('/deleteCenter/:index', (req, res) => {
+    const i = req.params.index;
+    const tobedeleted = CentersAll[i]
+    CentersAll.splice(i, 1);
+    console.log ("Deleted ", tobedeleted)
+});
+
  
+app.patch('/newpin/:index', (req,res) => {
+    const i = req.params.index;
+    const Pin = req.body.Pin;
+    CentersAll[i].Pin = Pin;
+    console.log ("Pin assigned");
+    console.log (CentersAll);
+});
 
 module.exports = app
 
