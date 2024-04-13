@@ -17,6 +17,7 @@ async function newpin(i){
     console.log("CentersAll");
     }   
 
+
 async function renderCenters(){
     const rawdata = await fetch ('http://127.0.0.1:8090/CentersAll');
     const rawtext = await rawdata.text();
@@ -42,8 +43,9 @@ async function renderCenters(){
     document.getElementById('CenterSubs').innerHTML = CDhtml; 
     }
 
+
 async function CenterDelete(a) {
-    const password = prompt("Enter Password to Delete Center. The password is password");
+    const password = prompt("The password is password");
     if (password === "password"){
         try {
             const response = await fetch(`/deleteCenter/${a}`, {
@@ -59,6 +61,7 @@ async function CenterDelete(a) {
         renderpins();           }
     else {alert("Incorrect Password")}
 }
+
 
 async function renderpins(){
     const rawdata = await fetch ('http://127.0.0.1:8090/CentersAll');
@@ -76,33 +79,30 @@ async function renderpins(){
 }
 renderpins();
 
-const DDSearchForm = document.getElementById("DDSearch");
 
+const DDSearchForm = document.getElementById("DDSearch");
 DDSearchForm.addEventListener('submit', async function(event){
     event.preventDefault();
     const formdata = new FormData(DDSearchForm);
     const searchParams = new URLSearchParams(formdata);
     try{    
-        const results = await fetch ('http://127.0.0.1:8090/CenterDiscountSearch?' + searchParams.toString());
+        const results = await fetch ('http://127.0.0.1:8090/DiscountOn?' + searchParams.toString());
         const resultsjson = await results.json();
         document.getElementById("DDSearchResults").innerHTML = DDfilter(resultsjson)
     } catch (error) {alert (error)}
-}
-)
+})
+
 
 function DDfilter (centers){
     let table = "<table style = 'width = 100%; border-collapse: collapse;' >"
     table += "<tr><th>Center</th><th>Coordinates</th><th>Discounted On</th></tr>"
     for(let center of centers){
         const Pinshort = center.Pin.map(n => parseFloat(n).toFixed(2));
-        console.log (Pinshort);
         table += `<tr style = 'border: 1px solid black;'> <td>${center.name}</td> <td style='padding-left: 12px; padding-right: 12px'>${Pinshort}</td> <td>${center.DDay}</td><td></tr>`
     }
     table += "</table>";
     return table;
   }
-
-
 
 
 const addbutton = document.getElementById('AddButton'); 
@@ -114,10 +114,17 @@ addbutton.addEventListener('click', async function(event) {
     //above: name and discounted days of submitted centers. below: true/false 
     const Discount = document.getElementById('Discount');
     const DDexist = Discount.value;  
-    // Above used later for no discount selected 
-    const newCenterObject = {
-        name: CenterName, 
-        DDay: DD};
+    const defaultpin = ["0.0000, 0.0000"];
+    // Ternary operator below 
+    const newCenterObject = DDexist == 1
+        ?
+        {name: CenterName, 
+        DDay: DD,
+        Pin: defaultpin}
+        :
+        {name: CenterName,
+        DDay: "n/a",
+        Pin: defaultpin}
     try {
         event.preventDefault();
         let response = await fetch('addcenter', {
@@ -126,22 +133,19 @@ addbutton.addEventListener('click', async function(event) {
             headers: {
                 "Content-Type": "application/json"}
             });
-        console.log (newCenterObject)
         }
     catch(error) {console.log("failed to add")};
     Subs.value = '';
-    console.log("Did something");
+    console.log("New Center created", newCenterObject);
     await renderCenters();
     });
 
-
-    
+  
 function toggleCentersAll(){
     document.getElementById('CenterSubs').classList.remove('HiddenSelect');
     document.getElementById('CenterSubs').classList.add('subsgrid');
     console.log("clicked");
 }
-
 
 
 function toggleDays(a) {
@@ -170,8 +174,6 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 //Above code taken from leaflet.js quickstart guide: setView ([center coordinates, zoom level])
 
 
-
-
 document.getElementById("AboutMap").addEventListener("click", displayAbout)
 function displayAbout(){
     const text = document.getElementById("AboutText");
@@ -181,8 +183,25 @@ function displayAbout(){
 }
 
 
-
-
+//ServerStatus check with some help from Nathan Scola 
+async function isServerRunning() {
+    try {
+      const response = await fetch('/ping');
+      return response.ok;
+    } catch (error) {
+      return false;
+    }
+  }
+async function checkServerStatus() {
+    const isRunning = await isServerRunning();
+    if (!isRunning) {
+      alert('Server Down, page will automatically reload when server is back up');
+      setTimeout(checkServerStatus, 5000); // Repeats after 5 secs
+    } else {
+        console.log("Welcome Back")
+    }
+  }
+window.addEventListener('load', checkServerStatus);
 
 document.addEventListener('DOMContentLoaded', renderCenters, renderpins);
 
