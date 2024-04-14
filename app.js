@@ -56,7 +56,6 @@ app.get('/ping', (req, res) => {
   });
   
 
-
 //unused
 app.get('/NameSearch/:name', function (req, resp){
     let CenterName = req.params.name;

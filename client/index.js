@@ -183,26 +183,22 @@ function displayAbout(){
 }
 
 
-//ServerStatus check with some help from Nathan Scola 
-async function isServerRunning() {
-    try {
-      const response = await fetch('/ping');
-      return response.ok;
-    } catch (error) {
-      return false;
-    }
-  }
-async function checkServerStatus() {
-    const isRunning = await isServerRunning();
-    if (!isRunning) {
-      alert('Server Down, page will automatically reload when server is back up');
-      setTimeout(checkServerStatus, 5000); // Repeats after 5 secs
-    } else {
-        console.log("Welcome Back")
-    }
-  }
-window.addEventListener('load', checkServerStatus);
 
+let needsReload = false;
+async function checkServerStatus() {
+    try {
+        const response = await fetch('/ping');
+        if (response.ok){
+            if (needsReload){
+                location.reload()}}
+        } 
+    catch (error) {
+      alert('Server down, it will reload automatically when server is back up');
+      needsReload = true;
+    setTimeout(checkServerStatus, 8000);
+  }
+}
+document.addEventListener('click', checkServerStatus);
 document.addEventListener('DOMContentLoaded', renderCenters, renderpins);
 
 /* 
