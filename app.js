@@ -32,7 +32,7 @@ app.post('/addcenter', function (req, resp) {
   });
 
 
-  app.delete('/deleteCenter/:index', (req, res) => {
+app.delete('/deleteCenter/:index', (req, res) => {
     const i = req.params.index;
     const tobedeleted = CentersAll[i]
     CentersAll.splice(i, 1);
@@ -55,6 +55,7 @@ app.get('/ping', (req, res) => {
     res.status(200).json({ message: 'Server is running' });
   });
   
+
 
 //unused
 app.get('/NameSearch/:name', function (req, resp){
@@ -81,9 +82,8 @@ app.get('/CentersAll', function(req, resp){
 
 async function updateCenters(){
     fs.writeFileSync('./CentersAll.json', JSON.stringify(CentersAll))
-}
+};
 
 
 
 module.exports = app
-

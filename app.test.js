@@ -2,8 +2,9 @@
 
 const request = require('supertest');
 const app = require('./app.js');
+const fs = require('fs');
 
-describe('Find matching discount days', () => {
+describe('Test Search and Delete', () => {
     test('GET method for /DiscountOn?DDay=Monday succeeds', () => {
         return request(app)
 	    .get('/DiscountOn?DDay=Monday')
@@ -22,10 +23,39 @@ describe('Find matching discount days', () => {
 	    .expect(/VauxEast/);
     });
 
-    test('DELETE /deleteCenter/:index succeeds', () => {
+
+    test('POST /addcenter', () => {
         return request(app)
-          .delete('/deleteCenter/0')
-          .expect(200);
-      });
-      
+        .post('/addcenter')
+        .expect(200);
+        });    
+        
+
+    test('POST /addcenter Successfully adds test center', async () => {
+        const TestCenter = {
+            name: 'Test Center',
+            DDay: 'Monday',
+            Pin: [80.0, -8.135],
+        };
+    
+        await request(app)
+            .post('/addcenter')
+            .send(TestCenter)
+            .expect(200);
+
+        const response = await request(app).get('/CentersAll');
+        const updatedCentersAll = response.body;
+    
+        // uses some method to check if properties match
+        const isTestCenterIncluded = updatedCentersAll.some(center => {
+            return center.name === TestCenter.name &&
+                center.DDay === TestCenter.DDay &&
+                center.Pin[0] === TestCenter.Pin[0] &&
+                center.Pin[1] === TestCenter.Pin[1];
+        });
+    
+        expect(isTestCenterIncluded).toBe(true);
+    });
+        
+
 });
