@@ -27,19 +27,20 @@
         <div class="row navbar-nav">
             <div class="col WoodBG nav-item">
                 <a href="#AboutText" class="nav-link active">
-                    <h4> Click for additional info </h4>
-                    <button id="AboutMap" class="CIstyles"> About this map </button>
+                    <h4> Map of Climbing Centers </h4>
+                    <p style="font-size: 0.8em;"> Click on each pin to see discount offerings</p> 
                 </a>
             </div>
             <div class="col BrownBG nav-item">
                 <a href="#Gear" class="nav-link active">
-                    <h4 style="text-align: center;"> Training in London </h4>
-                    <p style="font-size: 0.8em;"> Updated map tool for finding climbing centers with affordable entry. </p> 
+                    <h4 style="text-align: center;"> Centers Database </h4>
+                    <p style="font-size: 0.8em; text-align: center;"> Search, add, delete, or pin a center from the database </p> 
                 </a>
             </div>
             <div class="col MaroonBG nav-item" style="text-align: right;">
                 <a href="#Gallery" class="nav-link active">
                     <h4> Image & Video Gallery</h4>
+                    <p style="font-size: 0.8em; text-align: right;"> A collection of images from climbing trips </p> 
                 </a>
             </div>   
         </div>
@@ -47,65 +48,58 @@
 </nav>
 
 <div class="container WoodBG">
-    <div id="AboutText" style = "display:none">
-        <p>Climbing in London is spenny. Indoor boulder gyms cost up to £15 per entry, compared to the £8 entry of the fabulous Durham Climbing Center. To climbers visiting London and wanting to visit some of the gyms, it may be best to plan their travels based on the "super off peak" days that many gyms have, giving the option of a 50% day pass.</p>
-        <p>This website compiles and maps these gyms based on their super off peak days. The dataset is small because I made it myself by visiting their websites/in person.</p>
-        <p style = "margin: 0px;"> 1. Add and Delete to edit the database (methods Post and Delete). Refresh after Deleting to update Pins.</p> 
-            <p> 2. Pin on Map to create new pin (method Patch to edit center.Pin).</p>  
-            <p> 3. Find Centers based on discounts (using fetch query) </p>
-        </div>
+    <p style="padding-top: 15px; margin-bottom: 0px;" id="AboutText">Climbing in London is spenny. Indoor boulder gyms cost up to £15 per entry, with monthly memberships costing over £65 per month.</p> 
+    <p style="margin-bottom: 0px;"> Many gyms however do special "super off peak" discounts for a 50% entry on certain day of the week. </p> 
+    <p>Climbers visiting London for a short stay may benefit from knowing which centers are discounted and when.</p>
+    <!--Interactive Map-->
+    <div id="LCCMap"></div>
 </div>
 
-<div class="container col BrownBG" id="Gear" style="scroll-margin-top: 105px;">
-<!--Interactive Map-->
-    <div style = "text-align: center;"> 
-    <h4><u>London Climbing Map</u></h4>
-    </div>
 
-    <div id="LCCMap"></div>
-
-<!--Center Submissions-->
-<div class="row gx-1">
-    <div class="col-lg-6 col-md-6 mb-6">
-    <h5 style="margin-top: 12px;">New Center Submissions </h5> 
-        <div id = "changinggrid" class="subsgrid">
-            <input placeholder = "Center Name" class="CenterInput CIstyles" style="padding: 6px;"> 
-            <select id = "Discount" onchange = "toggleDays(this);" class="CIstyles">
-                <option value = ""> Special Discounts? </option>
-                <option value = "1"> Yep (select day) </option>
-                <option value = "0"> Nope (peak & off peak only) </option>
-            </select>
-            <select id = "DiscountDays" class = "HiddenSelect CIstyles">
-                <option value = "Monday"> Monday </option>
-                <option value = "Tuesday"> Tuesday </option>
-                <option value = "Wednesday"> Wednesday </option>
-                <option value = "Thursday"> Thursday </option>
-                <option value = "Friday"> Friday </option>
-            </select> 
-            <button id="AddButton">Add</button>
-        </div>
-
-        <!--CenterSearch-->
-        <div>
-            <h5 style="padding-top: 10px; display: inline-block;" > 
-                Find Centers discounted on </h5>
-            <form id = DDSearch style="display: inline-block; padding-left: 5px;"> 
-                <select name="DDay" class="CIstyles">
+<div class="container col BrownBG" id="Gear" style="scroll-margin-top: 85px;">
+    <!--Center Submissions-->
+    <div class="row gx-1">
+        <div class="col-lg-6 col-md-6 mb-6">
+            <!--CenterSearch-->
+            <div>
+                <h4 style="margin-top: 12px; display: inline-block;" > 
+                    Find Centers discounted on </h4>
+                <form id = DDSearch style="display: inline-block; padding-left: 5px;"> 
+                    <select name="DDay" class="CIstyles">
+                        <option value = "Monday"> Monday </option>
+                        <option value = "Tuesday"> Tuesday </option>
+                        <option value = "Wednesday"> Wednesday </option>
+                        <option value = "Thursday"> Thursday </option>
+                        <option value = "Friday"> Friday </option>
+                    </select>
+                    <button type="submit">Search</button>
+                </form>
+                <div id = "DDSearchResults"></div>
+            </div>
+            <!--New Center Subs-->
+        <h5 style="margin-top: 20px;">New Center Submissions </h5> 
+            <div id = "changinggrid" class="subsgrid">
+                <input placeholder = "Center Name" class="CenterInput CIstyles" style="padding: 6px;"> 
+                <select id = "Discount" onchange = "toggleDays(this);" class="CIstyles">
+                    <option value = ""> Special Discounts? </option>
+                    <option value = "1"> Yep (select day) </option>
+                    <option value = "0"> Nope (peak & off peak only) </option>
+                </select>
+                <select id = "DiscountDays" class = "HiddenSelect CIstyles">
                     <option value = "Monday"> Monday </option>
                     <option value = "Tuesday"> Tuesday </option>
                     <option value = "Wednesday"> Wednesday </option>
                     <option value = "Thursday"> Thursday </option>
                     <option value = "Friday"> Friday </option>
-                </select>
-                <button type="submit">Search</button>
-            </form>
-            <div id = "DDSearchResults"></div>
+                </select> 
+                <button id="AddButton">Add</button>
+            </div>
         </div>
-    </div>
-
-    <div class="col-lg-6 col-md-12 mb-6" style="padding-top: 30px; flex-wrap: wrap;">
-        <button onclick= "toggleCentersAll()"> Show All Centers</button>
-        <div id = "CenterSubs" class = "HiddenSelect"> <!--html from Map.js goes in this div--> </div>
+        
+        <div class="col-lg-6 col-md-12 mb-6" style="padding-top: 30px; flex-wrap: wrap;">
+            <button onclick="renderCenters(); hidebutton()" class="CIStyles" id="DisplayButton"> Display All Centers</button>
+            <div id = "CenterSubs" class = "subsgrid"> <!--Center Database--> </div>
+        </div>
     </div>
 </div>
 
@@ -117,7 +111,7 @@
 
 
 <div class="container col MaroonBG">
-    <h4 id="Gallery"> <u>Image Gallery</u></h4>
+    <h4 id="Gallery" style="scroll-margin-top: 85px;"> <u>Image Gallery</u></h4>
         <div class="row gx-1">
             <div class="col-lg-3 col-md-3 mb-4">
                 <img class="w-100" src="Pics/Almscliffe.jpg" alt="Another wide pic">
@@ -155,5 +149,4 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 </body>
 </html>
-
 

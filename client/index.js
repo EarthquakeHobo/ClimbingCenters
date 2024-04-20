@@ -138,14 +138,17 @@ addbutton.addEventListener("click", async function(event) {
 	Subs.value = "";
 	console.log("New Center created", newCenterObject);
 	await renderCenters();
+	hidebutton();
 });
 
-  
+
+/*
 function toggleCentersAll(){
 	document.getElementById("CenterSubs").classList.remove("HiddenSelect");
 	document.getElementById("CenterSubs").classList.add("subsgrid");
 	console.log("clicked");
 }
+*/
 
 
 function toggleDays(a) {
@@ -198,8 +201,19 @@ async function checkServerStatus() {
 		setTimeout(checkServerStatus, 8000);
 	}
 }
+
+
+function hidebutton(){
+	const button = document.getElementById("DisplayButton");
+	button.style.display = "none";
+}
+
+
 document.addEventListener("click", checkServerStatus);
-document.addEventListener("DOMContentLoaded", renderCenters, renderpins);
+document.addEventListener("DOMContentLoaded", function() {
+	renderCenters();
+	renderpins();
+});
 
 /* 
 const DeleteButton = document.getElementById("DeleteButton"); 
