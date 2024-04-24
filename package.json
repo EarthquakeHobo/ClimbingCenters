@@ -6,6 +6,7 @@
   "scripts": {
     "devStart": "nodemon server.js",
     "test": "jest",
+    "pretest": "eslint client/index.js",
     "start": "nodemon server.js"
   },
   "author": "",
